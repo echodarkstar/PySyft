@@ -985,6 +985,21 @@ class remainderTests(unittest.TestCase):
         t.remainder_(2)
         self.assertTrue(np.array_equal(t.data, np.array([[0, 1], [0, 1]])))
 
+class fmodTests(unittest.TestCase):
+    def test_fmod(self):
+        t = TensorBase([[-2, -3], [4, 1]])
+        result = t.fmod(1.5)
+        self.assertTrue(np.array_equal(result.data, np.array([[-0.5, -0], [1, 1]])))
+
+    def test_fmod_broadcasting(self):
+        t = TensorBase([[-2, -3], [4, 1]])
+        result = t.fmod([2, -3])
+        self.assertTrue(np.array_equal(result.data, np.array([[0, 0], [0, 1]])))
+
+    def test_fmod_(self):
+        t = TensorBase([[-2, -3], [4, 1]])
+        t.fmod_(2)
+        self.assertTrue(np.array_equal(t.data, np.array([[0, -1], [0, 1]])))
 
 class testMv(unittest.TestCase):
     def test_mv(self):

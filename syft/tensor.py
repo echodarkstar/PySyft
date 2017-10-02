@@ -1278,6 +1278,37 @@ class TensorBase(object):
         self.data = np.remainder(self.data, divisor)
         return self
 
+    def fmod(self, divisor):
+        """
+        Computes the element-wise remainder of division.
+        The divisor and dividend may contain both for integer and floating point numbers.
+        The remainder has the same sign as dividend tensor ``self``.
+        When ``divisor`` is a Tensor, the shapes of ``self`` and ``divisor`` must be broadcastable.
+        :param divisor:  The divisor. This may be either a number or a tensor.
+        :return: result tensor
+        """
+        if self.encrypted:
+            return NotImplemented
+        if not np.isscalar(divisor):
+            divisor = _ensure_tensorbase(divisor)
+        return TensorBase(np.fmod(self.data, divisor))
+
+    def fmod_(self, divisor):
+        """
+        Computes the element-wise remainder of division.
+        The divisor and dividend may contain both for integer and floating point numbers.
+        The remainder has the same sign as dividend tensor ``self``.
+        When ``divisor`` is a Tensor, the shapes of ``self`` and ``divisor`` must be broadcastable.
+        :param divisor:  The divisor. This may be either a number or a tensor.
+        :return: result self
+        """
+        if self.encrypted:
+            return NotImplemented
+        if not np.isscalar(divisor):
+            divisor = _ensure_tensorbase(divisor)
+        self.data = np.fmod(self.data, divisor)
+        return self
+
     def index_select(self, dim, index):
         """
         Returns a new Tensor which indexes the ``input`` Tensor along
